@@ -16,6 +16,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/tutores")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class PetOwnerController {
 
     private PetOwnerService PetOwnerService;
