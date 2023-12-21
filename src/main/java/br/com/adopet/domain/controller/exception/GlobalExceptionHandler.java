@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.BAD_REQUEST, "Invalid parameter.");
+        ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.BAD_REQUEST, "Parâmetro inválido.");
         return new ResponseEntity<>(exceptionDTO, exceptionDTO.status());
     }
 
@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Throwable.class)
     public ResponseEntity<?> handleUnexpectedException(Throwable e) {
-        ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error.");
+        ExceptionDTO exceptionDTO = new ExceptionDTO(HttpStatus.INTERNAL_SERVER_ERROR, "Erro não esperado.");
         return new ResponseEntity<>(exceptionDTO, exceptionDTO.status());
     }
 

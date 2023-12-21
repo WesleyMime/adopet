@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PetOwnerForm {
+public class TutorForm {
 
     @NotBlank
     private String name;

@@ -1,12 +1,12 @@
 package br.com.adopet.domain.controller;
 
 import br.com.adopet.AdopetApplication;
-import br.com.adopet.domain.model.PetOwnerEntity;
-import br.com.adopet.domain.model.PetOwnerForm;
+import br.com.adopet.domain.model.TutorEntity;
+import br.com.adopet.domain.model.TutorForm;
 import br.com.adopet.domain.model.exception.EmailAlreadyRegisteredException;
 import br.com.adopet.domain.model.exception.ResourceNotFoundException;
-import br.com.adopet.domain.repository.PetOwnerRepository;
-import br.com.adopet.domain.service.PetOwnerServiceImpl;
+import br.com.adopet.domain.repository.TutorRepository;
+import br.com.adopet.domain.service.TutorServiceImpl;
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -27,51 +27,50 @@ import static org.mockito.Mockito.when;
 @ActiveProfiles("test")
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringJUnitWebConfig(classes = AdopetApplication.class)
-class PetOwnerServiceTest {
+class TutorServiceTest {
 
-    private static final PetOwnerEntity ENTITY = new PetOwnerEntity(UUID.randomUUID(), "test", "test@email.com", "password");
+    private static final TutorEntity ENTITY = new TutorEntity(UUID.randomUUID(), "test", "test@email.com", "password");
 
-    private static final PetOwnerForm FORM = new PetOwnerForm("test", "test@email.com", "password");
+    private static final TutorForm FORM = new TutorForm("test", "test@email.com", "password");
 
     @InjectMocks
-    private PetOwnerServiceImpl service;
+    private TutorServiceImpl service;
 
     @Mock
-    private PetOwnerRepository repository;
+    private TutorRepository repository;
 
     @Mock
     private Validator validator;
 
     @Test
-    void whenGetAllPetOwners_thenReturnAllPetOwners() {
+    void whenGetAllTutors_thenReturnAllTutors() {
         when(repository.findAll()).thenReturn(List.of(ENTITY));
 
-        List<PetOwnerEntity> list = service.getAllPetOwners();
+        List<TutorEntity> list = service.getAllTutores();
 
         assertTrue(list.contains(ENTITY));
     }
 
     @Test
-    void whenGetPetOwnerById_thenReturnPetOwner() {
+    void whenGetTutorById_thenReturnTutor() {
         UUID id = ENTITY.getId();
         mockFindById();
 
-        PetOwnerEntity PetOwnerById = service.getPetOwnerById(id);
+        TutorEntity TutorById = service.getTutorById(id);
 
-        assertEquals(ENTITY, PetOwnerById);
+        assertEquals(ENTITY, TutorById);
     }
 
     @Test
-    void whenGetPetOwnerByInvalidId_thenThrowException() {
-        assertThrows(ResourceNotFoundException.class, () -> service.getPetOwnerById(UUID.randomUUID()));
+    void whenGetTutorByInvalidId_thenThrowException() {
+        assertThrows(ResourceNotFoundException.class, () -> service.getTutorById(UUID.randomUUID()));
     }
 
     @Test
-    void whenPostPetOwner_thenReturnPostedPetOwner() {
-        UUID id = ENTITY.getId();
+    void whenPostTutor_thenReturnPostedTutor() {
         when(repository.save(any())).thenReturn(ENTITY);
 
-        PetOwnerEntity posted = service.postPetOwner(FORM);
+        TutorEntity posted = service.postTutor(FORM);
 
         assertEquals(ENTITY.getId(), posted.getId());
         assertEquals(ENTITY.getName(), posted.getName());
@@ -80,48 +79,48 @@ class PetOwnerServiceTest {
     }
 
     @Test
-    void whenPostPetOwnerWithSameEmail_thenThrowException() {
+    void whenPostTutorWithSameEmail_thenThrowException() {
         when(repository.findByEmail(any())).thenReturn(Optional.of(ENTITY));
 
-        assertThrows(EmailAlreadyRegisteredException.class, () -> service.postPetOwner(FORM));
+        assertThrows(EmailAlreadyRegisteredException.class, () -> service.postTutor(FORM));
     }
 
     @Test
-    void whenUpdatePetOwner_thenReturnUpdatedPetOwner() {
+    void whenUpdateTutor_thenReturnUpdatedTutor() {
         UUID id = ENTITY.getId();
         mockFindById();
 
-        PetOwnerForm PetOwnerForm = new PetOwnerForm("updated", "updated@email.com", "updated");
-        PetOwnerEntity updated = service.updatePetOwner(id, PetOwnerForm);
+        TutorForm TutorForm = new TutorForm("updated", "updated@email.com", "updated");
+        TutorEntity updated = service.updateTutor(id, TutorForm);
 
         assertEquals(id, updated.getId());
-        assertEquals(PetOwnerForm.getName(), updated.getName());
-        assertEquals(PetOwnerForm.getEmail(), updated.getEmail());
-        assertEquals(PetOwnerForm.getPassword(), updated.getPassword());
+        assertEquals(TutorForm.getName(), updated.getName());
+        assertEquals(TutorForm.getEmail(), updated.getEmail());
+        assertEquals(TutorForm.getPassword(), updated.getPassword());
     }
 
     @Test
-    void whenPatchPetOwner_thenReturnPatchedPetOwner() {
+    void whenPatchTutor_thenReturnPatchedTutor() {
         UUID id = ENTITY.getId();
         String newName = "newName";
         mockFindById();
         when(repository.findByEmail(any())).thenReturn(Optional.of(ENTITY));
 
-        PetOwnerForm PetOwnerForm = new PetOwnerForm(newName, null, null);
-        PetOwnerEntity patched = service.patchPetOwner(id, PetOwnerForm);
+        TutorForm TutorForm = new TutorForm(newName, null, null);
+        TutorEntity patched = service.patchTutor(id, TutorForm);
 
         assertEquals(id, patched.getId());
-        assertEquals(PetOwnerForm.getName(), patched.getName());
+        assertEquals(TutorForm.getName(), patched.getName());
         assertEquals(ENTITY.getEmail(), patched.getEmail());
         assertEquals(ENTITY.getPassword(), patched.getPassword());
     }
 
     @Test
-    void whenDeletePetOwner_thenReturnTrue() {
+    void whenDeleteTutor_thenReturnTrue() {
         UUID id = ENTITY.getId();
         mockFindById();
 
-        boolean deleted = service.deletePetOwner(id);
+        boolean deleted = service.deleteTutor(id);
         assertTrue(deleted);
     }
 

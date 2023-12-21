@@ -7,14 +7,14 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity(name = "pet-owner")
+@Entity(name = "tutor")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-public class PetOwnerEntity {
+public class TutorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,7 +30,7 @@ public class PetOwnerEntity {
     @NotBlank
     private String password;
 
-    public PetOwnerEntity(String name, String email, String password) {
+    public TutorEntity(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
